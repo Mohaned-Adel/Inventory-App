@@ -1,6 +1,7 @@
 package com.example.mohaned.inventoryapp.data;
 
 import android.provider.BaseColumns;
+import android.util.Log;
 
 /**
  * Created by Mohaned on 2018-06-10.
@@ -20,5 +21,6 @@ public class BookContract {
         public static final String COLUMN_BOOK_QUANTITY = "quantity";
         public static final String COLUMN_BOOK_SUPPLIER_NAME = "supplier name";
         public static final String COLUMN_BOOK_SUPPLIER_PHONE = "supplier phone number";
+
     }
 }
