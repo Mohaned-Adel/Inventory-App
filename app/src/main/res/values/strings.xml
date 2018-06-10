@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">InventoryApp</string>
+    <string name="enter_data">Click on the button to enter the placeholder data</string>
+</resources>
