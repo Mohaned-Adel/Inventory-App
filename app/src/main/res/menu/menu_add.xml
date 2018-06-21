@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".AddActivity">
+
+    <item
+        android:id="@+id/save_book_action"
+        android:title="@string/save_book_action"
+        android:icon="@drawable/baseline_done_white_24"
+        app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/delete_book"
+        android:title="@string/delete_book_action"
+        app:showAsAction="never"/>
+
+</menu>

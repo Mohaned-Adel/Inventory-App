@@ -1,4 +1,53 @@
 <resources>
     <string name="app_name">InventoryApp</string>
+
     <string name="enter_data">Click on the button to enter the placeholder data</string>
+    
+    <!--add title for menu add action-->
+    <string name="add_action">Add a book</string>
+
+    <!--delete all books title for menu-->
+    <string name="delete_all_books_action">Delete All Books</string>
+
+    <!--insert placeholder book title for action menu-->
+    <string name="insert_placeholder_book_action">Insert PLACEHOLDER</string>
+
+    <!--save the book in the add menu-->
+    <string name="save_book_action">Save</string>
+
+    <!--delete the book in the add menu-->
+    <string name="delete_book_action">Delete</string>
+
+    <!--Book name field in the add activity-->
+    <string name="add_book_name">Book Name</string>
+
+    <!--name hint editor-->
+    <string name="name_hint">Name</string>
+
+    <!--phone number hint editor-->
+    <string name="number_hint">Phone Number</string>
+
+    <!--Book price field in the add activity-->
+    <string name="add_price">Price: </string>
+
+    <!--book price hint editor-->
+    <string name="price_hint">Price</string>
+
+    <!--Book quantity field in the add activity-->
+    <string name="add_quantity">Quantity: </string>
+
+    <!--book quantity hint editor-->
+    <string name="quantity_hint">Quantity</string>
+
+    <!--supplier info field in the add activity-->
+    <string name="supplier_info_field">Supplier Info :-</string>
+
+    <!--quantity placeholder display in the list item-->
+    <string name="display_quantity_number">300</string>
+
+    <!--price placeholder display in the list item-->
+    <string name="display_price_number">20 $</string>
+
+
+
 </resources>
