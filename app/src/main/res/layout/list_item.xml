@@ -1,83 +1,122 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     android:padding="16dp">
-    
-    <ImageView
-        android:id="@+id/display_image"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:src="@drawable/baseline_book_black_48"/>
-
-    <RelativeLayout
-        android:layout_width="0dp"
-        android:layout_weight="2"
-        android:layout_height="80dp">
-
-        <TextView
-            android:id="@+id/display_book_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/add_book_name"
-            android:textAppearance="?android:textAppearanceMedium"/>
-
-        <TextView
-            android:id="@+id/display_supplier_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/name_hint"
-            android:layout_centerInParent="true"
-            android:textAppearance="?android:textAppearanceSmall"/>
-
-        <TextView
-            android:id="@+id/display_supplier_number"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/number_hint"
-            android:layout_alignParentBottom="true"
-            android:textAppearance="?android:textAppearanceSmall"/>
-
-    </RelativeLayout>
 
     <LinearLayout
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="80dp"
-        android:orientation="vertical">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/quantity_hint"
-            android:textAlignment="center"
-            android:textAppearance="?android:textAppearanceSmall"/>
+        <ImageView
+            android:id="@+id/display_image"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/baseline_book_black_48" />
 
-        <TextView
-            android:id="@+id/display_quantity"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/display_quantity_number"
-            android:textAlignment="center" />
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="80dp"
+            android:layout_weight="2">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/price_hint"
-            android:textAlignment="center"
-            android:textAppearance="?android:textAppearanceSmall"
-            android:layout_marginTop="10dp"/>
+            <TextView
+                android:id="@+id/display_book_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/add_book_name"
+                android:textAppearance="?android:textAppearanceMedium" />
 
-        <TextView
-            android:id="@+id/display_price"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/display_price_number"
-            android:textAlignment="center"/>
+            <TextView
+                android:id="@+id/display_supplier_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="@string/name_hint"
+                android:textAppearance="?android:textAppearanceSmall" />
 
+            <TextView
+                android:id="@+id/display_supplier_number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:text="@string/number_hint"
+                android:textAppearance="?android:textAppearanceSmall" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="80dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/quantity_hint"
+                android:textAlignment="center"
+                android:textAppearance="?android:textAppearanceSmall" />
+
+            <TextView
+                android:id="@+id/display_quantity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/display_quantity_number"
+                android:textAlignment="center" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="@string/price_hint"
+                android:textAlignment="center"
+                android:textAppearance="?android:textAppearanceSmall" />
+
+            <TextView
+                android:id="@+id/display_price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/display_price_number"
+                android:textAlignment="center" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:focusable="false"
+        android:focusableInTouchMode="false">
+
+        <Button
+            android:id="@+id/decrease_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Decrease"
+            android:focusable="false"
+            android:focusableInTouchMode="false"/>
+
+        <Button
+            android:id="@+id/order_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Order"
+            android:layout_centerInParent="true"
+            android:focusable="false"
+            android:focusableInTouchMode="false"/>
+
+        <Button
+            android:id="@+id/increase_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Increase"
+            android:layout_alignParentRight="true"
+            android:focusable="false"
+            android:focusableInTouchMode="false"/>
+    </RelativeLayout>
 </LinearLayout>
