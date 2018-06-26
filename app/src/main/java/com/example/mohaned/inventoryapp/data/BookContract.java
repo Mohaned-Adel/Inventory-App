@@ -3,7 +3,6 @@ package com.example.mohaned.inventoryapp.data;
 import android.content.ContentResolver;
 import android.net.Uri;
 import android.provider.BaseColumns;
-import android.util.Log;
 
 /**
  * Created by Mohaned on 2018-06-10.
