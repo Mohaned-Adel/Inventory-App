@@ -48,6 +48,8 @@
     <!--price placeholder display in the list item-->
     <string name="display_price_number">20 $</string>
 
+    <!--the empty view text-->
+    <string name="empty_view_text">No Results click the add icon above to add new book</string>
 
 
 </resources>
