@@ -19,7 +19,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.mohaned.inventoryapp.data.BookContract;
@@ -42,6 +44,13 @@ public class AddActivity extends AppCompatActivity implements LoaderManager.Load
 
     private EditText mPriceField;
 
+    private TextView mDecreaseClick;
+
+    private TextView mIncreaseClick;
+
+    private String quantityValue;
+
+    private int quantity;
 
     private Uri mCurrentUri;
 
@@ -58,20 +67,52 @@ public class AddActivity extends AppCompatActivity implements LoaderManager.Load
 
         Log.i(LOG_TAG, "this is the uri with the id: " + mCurrentUri);
 
+        mNameField = (EditText) findViewById(R.id.book_name_field);
+        mSuppNameField = (EditText) findViewById(R.id.supplier_name_field);
+        mSuppNumField = (EditText) findViewById(R.id.supplier_number_field);
+        mQuantityField = (EditText) findViewById(R.id.book_quantity_field);
+        mPriceField = (EditText) findViewById(R.id.book_price_field);
+        mDecreaseClick = (TextView) findViewById(R.id.add_decrease_text);
+        mIncreaseClick = (TextView) findViewById(R.id.add_increase_text);
+
         if (mCurrentUri == null) {
             setTitle("Add a Book");
             invalidateOptionsMenu();
+            mDecreaseClick.setVisibility(View.GONE);
+            mIncreaseClick.setVisibility(View.GONE);
         } else {
             setTitle("Edit a Book");
 
             getLoaderManager().initLoader(0, null, this);
         }
 
-        mNameField = (EditText) findViewById(R.id.book_name_field);
-        mSuppNameField = (EditText) findViewById(R.id.supplier_name_field);
-        mSuppNumField = (EditText) findViewById(R.id.supplier_number_field);
-        mQuantityField = (EditText) findViewById(R.id.book_quantity_field);
-        mPriceField = (EditText) findViewById(R.id.book_price_field);
+        mDecreaseClick.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i(LOG_TAG, "you clicked the minus text");
+                quantityValue = mQuantityField.getText().toString().trim();
+                quantity = Integer.parseInt(quantityValue);
+
+                Log.i(LOG_TAG, "the quantity is: " + quantity);
+                quantity--;
+                Log.i(LOG_TAG, "the quantity is: " + quantity);
+
+                mQuantityField.setText(String.valueOf(quantity));
+
+            }
+        });
+
+        mIncreaseClick.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                quantityValue = mQuantityField.getText().toString().trim();
+                quantity = Integer.parseInt(quantityValue);
+
+                quantity++;
+
+                mQuantityField.setText(String.valueOf(quantity));
+            }
+        });
 
         mNameField.setOnTouchListener(mTouchListener);
         mPriceField.setOnTouchListener(mTouchListener);
@@ -87,6 +128,8 @@ public class AddActivity extends AppCompatActivity implements LoaderManager.Load
             return false;
         }
     };
+
+
 
     private void showUnsavedChangesDialog(
             DialogInterface.OnClickListener discardButton ) {

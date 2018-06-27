@@ -68,14 +68,36 @@
             android:textColor="@color/black"
             android:textSize="20sp" />
 
+        <TextView
+            android:id="@+id/add_decrease_text"
+            android:layout_width="48dp"
+            android:layout_height="match_parent"
+            android:text="-"
+            android:textSize="32sp"
+            android:textAlignment="center"
+            android:background="#aaa"
+            android:textColor="@color/black"
+            android:layout_marginRight="16dp"/>
+
         <EditText
             android:id="@+id/book_quantity_field"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:hint="@string/quantity_hint"
-            android:paddingLeft="8dp"
+            android:paddingLeft="4dp"
             android:inputType="number"/>
+
+        <TextView
+            android:id="@+id/add_increase_text"
+            android:layout_width="48dp"
+            android:layout_height="match_parent"
+            android:text="+"
+            android:textSize="32sp"
+            android:textAlignment="center"
+            android:background="#aaa"
+            android:textColor="@color/black"
+            android:layout_marginLeft="16dp"/>
 
     </LinearLayout>
 
