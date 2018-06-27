@@ -72,6 +72,13 @@
     <!--Dialog button text for the option to keep editing the current pet-->
     <string name="keep_editing">Keep Editing</string>
 
+    the messages on the check of every input
+    <string name="all_data_check">You didn\'t enter any data, please complete all the fields</string>
+    <string name="book_name_check">You must enter a valid Book name</string>
+    <string name="supp_check">You must enter ALL the supplier data</string>
+    <string name="quantity_check">You must enter a positive non ZERO quantity</string>
+    <string name="price_check">You must enter a positive non ZERO price</string>
+
 
 
 </resources>

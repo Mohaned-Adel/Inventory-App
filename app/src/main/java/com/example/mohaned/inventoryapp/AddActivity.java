@@ -34,23 +34,14 @@ public class AddActivity extends AppCompatActivity implements LoaderManager.Load
 
     private static final String LOG_TAG = AddActivity.class.getSimpleName();
 
-    private EditText mNameField;
+    private EditText mNameField, mSuppNameField, mSuppNumField, mQuantityField, mPriceField;
 
-    private EditText mSuppNameField;
+    private TextView mDecreaseClick, mIncreaseClick, mOrderClick;
 
-    private EditText mSuppNumField;
+    private String telNumber,
+            nameValue, supplierNameValue, supplierNumValue, quantityValue, priceValue;
 
-    private EditText mQuantityField;
-
-    private EditText mPriceField;
-
-    private TextView mDecreaseClick;
-
-    private TextView mIncreaseClick;
-
-    private String quantityValue;
-
-    private int quantity;
+    private int quantity, price;
 
     private Uri mCurrentUri;
 
@@ -74,12 +65,14 @@ public class AddActivity extends AppCompatActivity implements LoaderManager.Load
         mPriceField = (EditText) findViewById(R.id.book_price_field);
         mDecreaseClick = (TextView) findViewById(R.id.add_decrease_text);
         mIncreaseClick = (TextView) findViewById(R.id.add_increase_text);
+        mOrderClick = (TextView) findViewById(R.id.add_order_text);
 
         if (mCurrentUri == null) {
             setTitle("Add a Book");
             invalidateOptionsMenu();
             mDecreaseClick.setVisibility(View.GONE);
             mIncreaseClick.setVisibility(View.GONE);
+            mOrderClick.setVisibility(View.GONE);
         } else {
             setTitle("Edit a Book");
 
@@ -89,15 +82,17 @@ public class AddActivity extends AppCompatActivity implements LoaderManager.Load
         mDecreaseClick.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i(LOG_TAG, "you clicked the minus text");
                 quantityValue = mQuantityField.getText().toString().trim();
-                quantity = Integer.parseInt(quantityValue);
+                if (!TextUtils.isEmpty(quantityValue)) {
+                    Log.i(LOG_TAG, "you clicked the minus text");
+                    quantity = Integer.parseInt(quantityValue);
 
-                Log.i(LOG_TAG, "the quantity is: " + quantity);
-                quantity--;
-                Log.i(LOG_TAG, "the quantity is: " + quantity);
+                    Log.i(LOG_TAG, "the quantity is: " + quantity);
+                    quantity--;
+                    Log.i(LOG_TAG, "the quantity is: " + quantity);
 
-                mQuantityField.setText(String.valueOf(quantity));
+                    mQuantityField.setText(String.valueOf(quantity));
+                }
 
             }
         });
@@ -106,11 +101,29 @@ public class AddActivity extends AppCompatActivity implements LoaderManager.Load
             @Override
             public void onClick(View v) {
                 quantityValue = mQuantityField.getText().toString().trim();
-                quantity = Integer.parseInt(quantityValue);
+                Log.i(LOG_TAG, "you clicked the increase button: " + quantityValue);
+                if (!TextUtils.isEmpty(quantityValue)) {
+                    Log.i(LOG_TAG, "you in the if");
+                    quantity = Integer.parseInt(quantityValue);
 
-                quantity++;
+                    quantity++;
 
-                mQuantityField.setText(String.valueOf(quantity));
+                    mQuantityField.setText(String.valueOf(quantity));
+                }
+            }
+        });
+
+        mOrderClick.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                telNumber = mSuppNumField.getText().toString().trim();
+                if (!TextUtils.isEmpty(telNumber)) {
+                    Log.i(LOG_TAG, "order button clicked");
+
+                    Intent orderIntent = new Intent(Intent.ACTION_DIAL);
+                    orderIntent.setData(Uri.parse("tel:" + telNumber));
+                    startActivity(orderIntent);
+                }
             }
         });
 
@@ -119,6 +132,8 @@ public class AddActivity extends AppCompatActivity implements LoaderManager.Load
         mQuantityField.setOnTouchListener(mTouchListener);
         mSuppNumField.setOnTouchListener(mTouchListener);
         mSuppNameField.setOnTouchListener(mTouchListener);
+        mDecreaseClick.setOnTouchListener(mTouchListener);
+        mIncreaseClick.setOnTouchListener(mTouchListener);
     }
 
     private View.OnTouchListener mTouchListener = new View.OnTouchListener() {
@@ -169,28 +184,53 @@ public class AddActivity extends AppCompatActivity implements LoaderManager.Load
 
     private void saveBook() {
 
-        String nameValue = mNameField.getText().toString().trim();
-        String supplierNameValue = mSuppNameField.getText().toString().trim();
-        String supplierNumValue = mSuppNumField.getText().toString().trim();
-        String quantityValue = mQuantityField.getText().toString().trim();
-        String priceValue = mPriceField.getText().toString().trim();
+        Log.i(LOG_TAG, "you are in the saveBook method");
 
-        if (mCurrentUri == null &&
-                TextUtils.isEmpty(nameValue) && TextUtils.isEmpty(supplierNameValue) &&
-                TextUtils.isEmpty(supplierNumValue) && TextUtils.isEmpty(quantityValue) &&
-                TextUtils.isEmpty(priceValue)) {
+        nameValue = mNameField.getText().toString().trim();
+        supplierNameValue = mSuppNameField.getText().toString().trim();
+        supplierNumValue = mSuppNumField.getText().toString().trim();
+        quantityValue = mQuantityField.getText().toString().trim();
+        priceValue = mPriceField.getText().toString().trim();
+
+
+        Log.i(LOG_TAG, "you got all the data: " + quantityValue);
+
+        if (TextUtils.isEmpty(nameValue) && TextUtils.isEmpty(supplierNameValue) && TextUtils.isEmpty(supplierNumValue)
+                && TextUtils.isEmpty(quantityValue) && TextUtils.isEmpty(priceValue)) {
+            Toast.makeText(this, R.string.all_data_check, Toast.LENGTH_SHORT).show();
             return;
         }
 
-        int quantity = 0;
-
-        if (!TextUtils.isEmpty(quantityValue)) {
-            quantity = Integer.parseInt(quantityValue);
+        if (TextUtils.isEmpty(nameValue)) {
+            Log.i(LOG_TAG, "before the name Toast");
+            Toast.makeText(this, R.string.book_name_check, Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (TextUtils.isEmpty(supplierNumValue) || TextUtils.isEmpty(supplierNameValue)) {
+            Toast.makeText(this, R.string.supp_check, Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (TextUtils.isEmpty(quantityValue)) {
+            Toast.makeText(this, R.string.quantity_check, Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (TextUtils.isEmpty(priceValue)) {
+            Toast.makeText(this, R.string.price_check, Toast.LENGTH_SHORT).show();
+            return;
         }
 
-        int price = 0;
-        if (!TextUtils.isEmpty(priceValue)) {
-            price = Integer.parseInt(priceValue);
+
+        quantity = Integer.parseInt(quantityValue);
+
+        if (quantity <= 0) {
+            Toast.makeText(this, R.string.quantity_check, Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        price = Integer.parseInt(priceValue);
+
+        if (price <= 0) {
+            Toast.makeText(this, R.string.price_check, Toast.LENGTH_SHORT).show();
         }
 
         ContentValues values = new ContentValues();
@@ -206,6 +246,7 @@ public class AddActivity extends AppCompatActivity implements LoaderManager.Load
                 Toast.makeText(this, "error with saving the book", Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(this, "the book saved successful" , Toast.LENGTH_SHORT).show();
+                finish();
             }
         } else {
             int rowsAffected = getContentResolver().update(mCurrentUri, values, null, null);
@@ -213,6 +254,7 @@ public class AddActivity extends AppCompatActivity implements LoaderManager.Load
                 Toast.makeText(this, "Error with saving Book", Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(this, "Book saved", Toast.LENGTH_SHORT).show();
+                finish();
             }
         }
 
@@ -274,8 +316,9 @@ public class AddActivity extends AppCompatActivity implements LoaderManager.Load
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.save_book_action:
+                Log.i(LOG_TAG, "you clicked the save button");
                 saveBook();
-                finish();
+                Log.i(LOG_TAG, "you finish the saveBook method");
                 return true;
             case R.id.delete_book:
                 showDeleteBookDialog();
