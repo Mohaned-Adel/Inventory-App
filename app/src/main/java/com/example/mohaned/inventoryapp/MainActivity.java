@@ -1,9 +1,11 @@
 package com.example.mohaned.inventoryapp;
 
+import android.app.AlertDialog;
 import android.app.LoaderManager;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.CursorLoader;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
@@ -16,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.mohaned.inventoryapp.data.BookContract;
 
@@ -24,13 +27,14 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     public static final String LOG_TAG = MainActivity.class.getSimpleName();
 
     BookCursorAdapter cursorAdapter;
+    private ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ListView listView = (ListView) findViewById(R.id.list);
+        listView = (ListView) findViewById(R.id.list);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -46,10 +50,35 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         cursorAdapter = new BookCursorAdapter(this, null);
 
+        View emptyView = findViewById(R.id.empty_view);
+        listView.setEmptyView(emptyView);
+
         listView.setAdapter(cursorAdapter);
 
         getLoaderManager().initLoader(0, null, this);
 
+    }
+
+    private void showDeleteAllDialog() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setMessage(R.string.delete_all_dialog)
+                .setPositiveButton(R.string.delete_button_dialog, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        deleteAllPets();
+                    }
+                })
+                .setNegativeButton(R.string.cancel_button_dialog, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     private void insertBook() {
@@ -93,7 +122,11 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 insertBook();
                 return true;
             case R.id.action_delete_all_books:
-                deleteAllPets();
+                if (cursorAdapter.getCount() != 0) {
+                    showDeleteAllDialog();
+                } else {
+                    Toast.makeText(this, "The list is empty try adding new Books", Toast.LENGTH_SHORT).show();
+                }
                 return true;
         }
         return super.onOptionsItemSelected(item);

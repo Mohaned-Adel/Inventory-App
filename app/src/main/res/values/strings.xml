@@ -51,5 +51,27 @@
     <!--the empty view text-->
     <string name="empty_view_text">No Results click the add icon above to add new book</string>
 
+    <!--Delete All books message dialog-->
+    <string name="delete_all_dialog">Delete All the Books ?</string>
+
+    <!--Delete the book-->
+    <string name="delete_book_dialog">Delete the Book ?</string>
+
+    <!--Delete All positive button-->
+    <string name="delete_button_dialog">Delete</string>
+
+    <!--cancel negative button-->
+    <string name="cancel_button_dialog">Cancel</string>
+
+    <!--Dialog message when user is leaving editor but hasn't saved changes-->
+    <string name="unsaved_changes_dialog">Discard your changes and quit editing?</string>
+
+    <!--Dialog button text for the option to discard a user's changes-->
+    <string name="discard">Discard</string>
+
+    <!--Dialog button text for the option to keep editing the current pet-->
+    <string name="keep_editing">Keep Editing</string>
+
+
 
 </resources>

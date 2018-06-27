@@ -1,19 +1,24 @@
 package com.example.mohaned.inventoryapp;
 
+import android.app.AlertDialog;
 import android.app.LoaderManager;
 import android.content.ContentValues;
 import android.content.CursorLoader;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -67,6 +72,56 @@ public class AddActivity extends AppCompatActivity implements LoaderManager.Load
         mSuppNumField = (EditText) findViewById(R.id.supplier_number_field);
         mQuantityField = (EditText) findViewById(R.id.book_quantity_field);
         mPriceField = (EditText) findViewById(R.id.book_price_field);
+
+        mNameField.setOnTouchListener(mTouchListener);
+        mPriceField.setOnTouchListener(mTouchListener);
+        mQuantityField.setOnTouchListener(mTouchListener);
+        mSuppNumField.setOnTouchListener(mTouchListener);
+        mSuppNameField.setOnTouchListener(mTouchListener);
+    }
+
+    private View.OnTouchListener mTouchListener = new View.OnTouchListener() {
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            mBookHasChanged = true;
+            return false;
+        }
+    };
+
+    private void showUnsavedChangesDialog(
+            DialogInterface.OnClickListener discardButton ) {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setMessage(R.string.unsaved_changes_dialog)
+                .setPositiveButton(R.string.discard, discardButton)
+                .setNegativeButton(R.string.keep_editing, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        if (!mBookHasChanged) {
+            super.onBackPressed();
+            return;
+        }
+
+        DialogInterface.OnClickListener discardButton = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                finish();
+            }
+        };
+
+        showUnsavedChangesDialog(discardButton);
     }
 
     private void saveBook() {
@@ -135,6 +190,27 @@ public class AddActivity extends AppCompatActivity implements LoaderManager.Load
         finish();
     }
 
+    private void showDeleteBookDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setMessage(R.string.delete_book_dialog)
+                .setPositiveButton(R.string.delete_button_dialog, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        deleteBook();
+                    }
+                })
+                .setNegativeButton(R.string.cancel_button_dialog, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_add, menu);
@@ -159,7 +235,22 @@ public class AddActivity extends AppCompatActivity implements LoaderManager.Load
                 finish();
                 return true;
             case R.id.delete_book:
-                deleteBook();
+                showDeleteBookDialog();
+                return true;
+            case android.R.id.home:
+                if (!mBookHasChanged) {
+                    NavUtils.navigateUpFromSameTask(this);
+                    return true;
+                }
+
+                DialogInterface.OnClickListener discard = new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        NavUtils.navigateUpFromSameTask(AddActivity.this);
+                    }
+                };
+
+                showUnsavedChangesDialog(discard);
                 return true;
         }
 
