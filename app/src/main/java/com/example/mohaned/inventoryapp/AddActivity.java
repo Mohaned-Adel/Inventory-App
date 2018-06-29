@@ -231,30 +231,30 @@ public class AddActivity extends AppCompatActivity implements LoaderManager.Load
 
         if (price <= 0) {
             Toast.makeText(this, R.string.price_check, Toast.LENGTH_SHORT).show();
-        }
-
-        ContentValues values = new ContentValues();
-        values.put(BookContract.BookEntry.COLUMN_BOOK_NAME, nameValue);
-        values.put(BookContract.BookEntry.COLUMN_BOOK_SUPPLIER_NAME, supplierNameValue);
-        values.put(BookContract.BookEntry.COLUMN_BOOK_SUPPLIER_PHONE, supplierNumValue);
-        values.put(BookContract.BookEntry.COLUMN_BOOK_QUANTITY, quantity);
-        values.put(BookContract.BookEntry.COLUMN_BOOK_PRICE, price);
-
-        if (mCurrentUri == null) {
-            Uri newUri = getContentResolver().insert(BookContract.BookEntry.CONTENT_URI, values);
-            if (newUri == null) {
-                Toast.makeText(this, "error with saving the book", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(this, "the book saved successful" , Toast.LENGTH_SHORT).show();
-                finish();
-            }
         } else {
-            int rowsAffected = getContentResolver().update(mCurrentUri, values, null, null);
-            if (rowsAffected == 0) {
-                Toast.makeText(this, "Error with saving Book", Toast.LENGTH_SHORT).show();
+            ContentValues values = new ContentValues();
+            values.put(BookContract.BookEntry.COLUMN_BOOK_NAME, nameValue);
+            values.put(BookContract.BookEntry.COLUMN_BOOK_SUPPLIER_NAME, supplierNameValue);
+            values.put(BookContract.BookEntry.COLUMN_BOOK_SUPPLIER_PHONE, supplierNumValue);
+            values.put(BookContract.BookEntry.COLUMN_BOOK_QUANTITY, quantity);
+            values.put(BookContract.BookEntry.COLUMN_BOOK_PRICE, price);
+
+            if (mCurrentUri == null) {
+                Uri newUri = getContentResolver().insert(BookContract.BookEntry.CONTENT_URI, values);
+                if (newUri == null) {
+                    Toast.makeText(this, "error with saving the book", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(this, "the book saved successful" , Toast.LENGTH_SHORT).show();
+                    finish();
+                }
             } else {
-                Toast.makeText(this, "Book saved", Toast.LENGTH_SHORT).show();
-                finish();
+                int rowsAffected = getContentResolver().update(mCurrentUri, values, null, null);
+                if (rowsAffected == 0) {
+                    Toast.makeText(this, "Error with saving Book", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(this, "Book saved", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
             }
         }
 
